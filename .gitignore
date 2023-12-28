@@ -1,1 +1,2 @@
-adventenv
+__pycache__/
+./advent2022/__pycache__/
