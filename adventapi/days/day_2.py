@@ -2,7 +2,6 @@ from adventapi.days.lib.input_handlers import read_file, split_content
 
 file_contents = read_file("adventapi/days/day_2_input.txt")
 
-
 def solve(input=file_contents):
     scores = {
         "A": 1,
@@ -45,4 +44,4 @@ def solve(input=file_contents):
         else:
             score_2 += figure_scores[scores[opponent] + 1] + scores["win"]
 
-    return {1: score_1, 2: score_2}
+    return {1: str(score_1), 2: str(score_2)}

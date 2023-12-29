@@ -41,4 +41,4 @@ def solve(input=file_contents):
         if len(set(first_work_list).intersection(set(second_work_list))) > 0:
             duplicates += 1
 
-    return {1: contained_pairs, 2: duplicates}
+    return {1: str(contained_pairs), 2: str(duplicates)}

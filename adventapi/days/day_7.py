@@ -75,4 +75,4 @@ def solve(input=file_contents):
 
     space_to_free = 30000000 - (70000000 - root_node.size)
 
-    return {1: total_size, 2: free_up_space(root_node, root_node.size)}
+    return {1: str(total_size), 2: str(free_up_space(root_node, root_node.size))}

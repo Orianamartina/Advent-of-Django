@@ -2,7 +2,6 @@ from adventapi.days.lib.input_handlers import read_file, split_content
 
 file_contents = read_file("adventapi/days/day_3_input.txt")
 
-
 def solve(input=file_contents):
     contents = split_content(input)
     item_types = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -22,4 +21,4 @@ def solve(input=file_contents):
         repeating_char = list(set(group[0]).intersection(*group[1:]))
         total_badge_priority += item_types.index(repeating_char[0])
 
-    return {1: total_priority, 2: total_badge_priority}
+    return {1: str(total_priority), 2: str(total_badge_priority)}

@@ -26,4 +26,4 @@ def solve(input = file_contents):
     part1 = process_signal(input, 4)
     part2 = process_signal(input, 14)
 
-    return {1:part1, 2:part2}
+    return {1:str(part1), 2:str(part2)}
