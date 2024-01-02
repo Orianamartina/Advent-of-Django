@@ -41,7 +41,7 @@ def solve_day(request, user_id, day_solve_function, day):
                 )
 
         else:
-            result = day_solve_function()
+                result = day_solve_function()
 
         return JsonResponse(result)
     except IndexError:
@@ -49,21 +49,27 @@ def solve_day(request, user_id, day_solve_function, day):
     except Exception as e:
         return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=400)
 
-def get_user_days(user_id=1):
-    try:
-        resolutions = DayResolution.objects.filter(user = user_id)
-        data = list(resolutions.values())
-        return data
-    except Exception as e:
-        return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=400)
+@csrf_exempt
+def get_user_days(request, user_id):
+    if request.method == "GET":
+        try:
+            resolutions = DayResolution.objects.filter(user = user_id)
+            data = list(resolutions.values())
+            return JsonResponse({'data': data})
+        except Exception as e:
+            return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=400)
+    
 
+def home(request):
+    user_id = request.user.id
+    resolutions = DayResolution.objects.filter(user = user_id)
+    data = list(resolutions.values())
+    return render(request, 'home.html', {'user_id': user_id, 'user_info': data})
 
-
-
-def home(request, user_id=1):
-    user_info = get_user_days(user_id)
-
-    return render(request, 'home.html', {'user': user_id, 'user_info': user_info})
+def submit_input(request):
+    days = [i for i in range(1,26)]
+    user = request.user
+    return render(request, 'submit_input.html', {'days': days, 'id': user.id})
 
 @csrf_exempt
 @api_view(['POST'])

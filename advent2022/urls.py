@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path, include
-from adventapi.views import solve_day, create_days, get_user_days, home
+from adventapi.views import solve_day, create_days, get_user_days, home, submit_input
 from adventapi.days import day_1, day_2, day_3, day_4, day_5, day_6, day_7
 from django.views.generic.base import TemplateView
 urlpatterns = [
@@ -9,6 +9,7 @@ urlpatterns = [
     path('createdays/', create_days, name="create_days"),
     path("accounts/", include("django.contrib.auth.urls")),
     path("", home, name="home"),
+    path("submit", submit_input, name="submit"),
     path("resolutions/<int:user_id>", get_user_days, name="get_user_days"),
     path('day/1/<int:user_id>/', solve_day ,{'day_solve_function': day_1.solve, 'day': 1}, name="day_one"),
     path('day/2/<int:user_id>/', solve_day ,{'day_solve_function': day_2.solve, 'day': 2}, name="day_two"),

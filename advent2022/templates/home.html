@@ -1,16 +1,34 @@
 {% extends "base.html" %}
-
-{% block title %}Home{% endblock %}
-
 {% block content %}
-{% if user.is_authenticated %}
-Hi {{ user.username }}!
-<form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Log Out</button>
-</form>
-{% else %}
-<p>You are not logged in</p>
-<a href="{% url 'login' %}">Log In</a>
-{% endif %}
-{% endblock %}
+<div class="homeContainer">
+
+    {% if user.is_authenticated %}
+    {% include 'nav.html' %}
+    <h1 class="hometitle">Advent of code 2022</h1>
+    <h1></h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Day ID</th>
+                <th>Answer Part One</th>
+                <th>Answer Part Two</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in user_info %}
+
+            <tr>
+                <td>{{ item.day_id }}</td>
+                <td>{{ item.answer_part_one }}</td>
+                <td>{{ item.answer_part_two }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">Log In</a>
+    {% endif %}
+    {% endblock %}
+</div>

@@ -1,0 +1,44 @@
+.homeContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+table {
+    display: block;
+    margin: auto;
+    width: fit-content;
+    border: none;
+}
+
+th,
+td {
+    border: none
+}
+
+th {
+    padding: 10px;
+    background-color: var(--darkBlue);
+    color: var(--cream);
+}
+
+td {
+    padding: 10px;
+    background-color: var(--lightBlue);
+}
+
+td:hover {
+    background-color: var(--mediumBlue);
+}
+
+@media (max-width:800px) {
+    table {
+        font-size: small;
+    }
+
+    .hometitle {
+        font-size: medium;
+        margin-top: 10%;
+    }
+}
