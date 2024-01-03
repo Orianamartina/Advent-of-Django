@@ -1,24 +1,25 @@
 {% extends "base.html" %}
 {% block title %}Submit your input{% endblock %}
 {% block content %}
-<select name="dropdown" id="dropdown">
-    <option value="Select a day" disabled="true" selected="true">Select a day</option>
-    {% for day in days %}
-    <option value="{{ day }}">
-        {{ day }}
-    </option>
-    {% endfor %}
-</select>
-<form class="input_form" method="POST" action={{user.id}} id="input_form">
-    {% csrf_token %}
 
+{% include "nav.html" %}
 
-    <textarea id="data"></textarea>
-    <button type="submit" id="solveButton">Solve</button>
-</form>
-
-
-
+<div class="submit_input_container">
+    <h2>Submit your input</h2>
+    <select name="dropdown" id="dropdown">
+        <option value="Select a day" disabled="true" selected="true">Select a day</option>
+        {% for day in days %}
+        <option value="{{ day }}">
+            {{ day }}
+        </option>
+        {% endfor %}
+    </select>
+    <form class="input_form" method="POST" action={{user.id}} id="input_form">
+        {% csrf_token %}
+        <textarea id="data"></textarea>
+    </form>
+    <button type="button" id="solveButton">Solve</button>
+</div>
 
 
 <script>
@@ -28,7 +29,6 @@
         $('#solveButton').click(function () {
             // Get the textarea value
             var textData = $('#data').val();
-
             // Update the form action dynamically
             var selectedDay = $('#dropdown').val();
             var url = "/day/" + selectedDay + "/" + initialFormAction + "/";
@@ -43,14 +43,7 @@
                 headers: {
                     'X-CSRFToken': $('[name="csrfmiddlewaretoken"]').val(),
                 },
-                success: function (response) {
-                    console.log(response);
-                    // Handle the response as needed
-                },
-                error: function (error) {
-                    console.log(error);
-                    // Handle the error
-                }
+                // success: window.location.href = "/"
             });
 
             // Prevent the default form submission

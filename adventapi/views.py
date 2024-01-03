@@ -9,6 +9,7 @@ from .serializers import UserSerializer
 import json
 from .models import DayResolution, Day
 # Create your views here.
+@csrf_exempt
 def create_days(request):
     if not Day.objects.exists() and request.method == "GET":
         for i in range(1, 26):
@@ -18,7 +19,9 @@ def create_days(request):
         return JsonResponse({'Success': 'Days database succesfully filled'})
     else:
         return JsonResponse({"error": "Wrong request method or days already exist."})
+
 @csrf_exempt
+
 def solve_day(request, user_id, day_solve_function, day):
     try:
         if request.method == 'POST' and request.body:
@@ -41,7 +44,7 @@ def solve_day(request, user_id, day_solve_function, day):
                 )
 
         else:
-                result = day_solve_function()
+            result = day_solve_function()
 
         return JsonResponse(result)
     except IndexError:
@@ -50,6 +53,7 @@ def solve_day(request, user_id, day_solve_function, day):
         return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=400)
 
 @csrf_exempt
+
 def get_user_days(request, user_id):
     if request.method == "GET":
         try:
@@ -72,6 +76,7 @@ def submit_input(request):
     return render(request, 'submit_input.html', {'days': days, 'id': user.id})
 
 @csrf_exempt
+
 @api_view(['POST'])
 def create_user(request):
     if request.method == 'POST':

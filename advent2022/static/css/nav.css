@@ -1,18 +1,21 @@
 .nav {
     display: flex;
     flex-direction: row;
+    padding: 15px;
     width: 100%;
     justify-content: space-between;
+
 }
 
 .buttonContainer {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 30px;
 }
 
 .title {
     margin: 0;
+    font-size: xx-large;
 }
 
 @media (max-width:500px) {

@@ -1,7 +1,7 @@
 .homeContainer {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+
     align-items: center;
 }
 
@@ -14,13 +14,15 @@ table {
 
 th,
 td {
-    border: none
+    border: none;
+    max-width: 102ch;
 }
 
 th {
     padding: 10px;
     background-color: var(--darkBlue);
     color: var(--cream);
+    max-width: 30ch;
 }
 
 td {

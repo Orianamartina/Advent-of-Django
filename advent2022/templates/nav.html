@@ -1,10 +1,12 @@
 <div class="nav">
     <h1 class="title">Hi {{ user.username }}!</h1>
+
     <div>
+        <button id="homeButton">Home</button>
         {% csrf_token %}
         <button id="solveNewDayButton">Solve a new day</button>
         {% csrf_token %}
-        <button type="submit">Log Out</button>
+        <button id="logoutButton" type="button">Log Out</button>
 
     </div>
 </div>
@@ -15,5 +17,8 @@
 
     document.getElementById('logoutButton').addEventListener('click', function () {
         window.location.href = "{% url 'logout' %}"
+    });
+    document.getElementById('homeButton').addEventListener('click', function () {
+        window.location.href = "/"
     });
 </script>
