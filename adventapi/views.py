@@ -38,7 +38,6 @@ def solve_day(request, user_id):
 
                 except DayResolution.DoesNotExist:
                         result = solve(clean_form["day"],clean_form["input"])       
-                        print(result)  
                         # Create a new DayResolution object
                         day_resolution = DayResolution.objects.create(
                             input=clean_form["input"],
@@ -51,7 +50,7 @@ def solve_day(request, user_id):
                         )
                         RecentResolutions.objects.create(
                             user = User.objects.get(id=user_id),
-                            resolution = day_resolution.id
+                            resolution = DayResolution.objects.get(user=user_id, day=clean_form["day"])
                         )
                 return JsonResponse({"Success":"Day resolution succesfully submited"})
             return JsonResponse({"error": "invalid form"})
@@ -74,8 +73,9 @@ def get_user_days(request, user_id):
     
 
 def home(request):
+    recent = RecentResolutions.objects.select_related('resolution')
     user_id = request.user.id
-    return render(request, 'home.html', {'user_id': user_id})
+    return render(request, 'home.html', {'user_id': user_id, 'recent': recent})
 
 def submit_input(request):
     days = [i for i in range(1,26)]

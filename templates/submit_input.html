@@ -7,9 +7,22 @@
 <div class="submit_input_container">
     <h2>Submit your input</h2>
     <form class="input_form" method="POST" id="input_form" action="solveday/{{id}}">
-        {{form.as_p}}
+        <label for="{{ form.language.id_for_label }}">Programming Language:</label>
+        {{ form.language }}
+
+        <label for="{{ form.day.id_for_label }}">Day:</label>
+        {{ form.day }}
+
+        <label for="{{ form.input.id_for_label }}">Input:</label>
+        {{ form.input }}
+
+        <label for="{{ form.code.id_for_label }}">Code:</label>
+        {{ form.code }}
+
         <button type="submit" id="solveButton">Solve</button>
     </form>
+
+
 </div>
 
 

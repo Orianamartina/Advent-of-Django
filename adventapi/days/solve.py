@@ -25,8 +25,9 @@ day_modules = {
 }
 
 def solve(day, input_data=None):
-    day_module = day_modules.get(f"day_{int(day)}") 
+    day_module = day_modules.get(f"day_{day}") 
     if day_module:
+        print(day_module.solve(input_data))
         return(day_module.solve(input_data))
     else:
         return TypeError
