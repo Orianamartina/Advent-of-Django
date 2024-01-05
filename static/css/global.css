@@ -1,14 +1,14 @@
 :root {
-    --lightBlue: #dadada;
-    --darkBlue: #5d7599;
-    --mediumBlue: #abb6c8;
-    --cream: #f5f1db;
-    --black: #32373b;
+    --pink: #c252e1;
+    --lightBlue: #6ecbf5;
+    --mediumBlue: #586ae2;
+    --lightPink: #e0d9f6;
+    --darkBlue: #131027;
 }
 
 body {
-    background-color: var(--cream);
-    color: var(--darkBlue);
+    background-color: var(--darkBlue);
+    color: var(--lightPink);
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -16,17 +16,17 @@ body {
 button {
     border: none;
     background-color: var(--mediumBlue);
-    color: #32373b;
+    color: var(--lightPink);
     font-size: medium;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 1px 1px var(--darkBlue);
+    box-shadow: 1px 1px var(--pink);
     transition: all 0.2s;
 }
 
 button:hover {
     cursor: pointer;
-    box-shadow: 3px 3px var(--darkBlue);
+    box-shadow: 3px 3px var(--pink);
 }
 
 @media (max-width:500px) {

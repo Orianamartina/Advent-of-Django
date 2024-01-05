@@ -6,8 +6,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from .forms.submit_answer import SubmissionForm
 import json
-from .models import DayResolution, Day
-from .days import solve
+from .models import DayResolution, Day, RecentResolutions
+from .days.solve import solve
 # Create your views here.
 @csrf_exempt
 def create_days(request):
@@ -28,27 +28,34 @@ def solve_day(request, user_id):
             form = SubmissionForm(request.POST)
             if form.is_valid():
                 clean_form = form.cleaned_data
-
                 try:
                     resolution = DayResolution.objects.get(input=clean_form["input"], user=user_id,day =clean_form["day"])
                     result = {
                         1: resolution.answer_part_one,
                         2: resolution.answer_part_two
                     }
-                    print(resolution)
-                    return JsonResponse({"aa":"aa"})
-                except DayResolution.DoesNotExist:
-                    result = solve(clean_form["input"], clean_form["day"])
-                    # Create a new DayResolution object
-                    DayResolution.objects.create(
-                        input=clean_form["input"],
-                        day=Day.objects.get(number=clean_form["day"]),
-                        answer_part_one=result[1],
-                        answer_part_two=result[2],
-                        code = clean_form["code"],
-                        user = User.objects.get(id=user_id)
-                    )
+               
 
+                except DayResolution.DoesNotExist:
+                        result = solve(clean_form["day"],clean_form["input"])       
+                        print(result)  
+                        # Create a new DayResolution object
+                        day_resolution = DayResolution.objects.create(
+                            input=clean_form["input"],
+                            day=Day.objects.get(number=clean_form["day"]),
+                            answer_part_one=result[1],
+                            answer_part_two=result[2],
+                            language = clean_form["language"],
+                            code = clean_form["code"],
+                            user = User.objects.get(id=user_id)
+                        )
+                        RecentResolutions.objects.create(
+                            user = User.objects.get(id=user_id),
+                            resolution = day_resolution.id
+                        )
+                return JsonResponse({"Success":"Day resolution succesfully submited"})
+            return JsonResponse({"error": "invalid form"})
+        
     except IndexError:
         return JsonResponse({'error': 'Index out of range. Make sure not to leave empty spaces at the end of the input'}, status=400)
     except Exception as e:

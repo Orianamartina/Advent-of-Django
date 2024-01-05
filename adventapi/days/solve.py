@@ -1,4 +1,4 @@
-from . import day_1, day_2, day_3, day_4, day_5, day_6, day_7, day_8,day_9, day_10, day_11, day_12, day_13, day_14, day_15
+from adventapi.days import day_1, day_2, day_3, day_4, day_5, day_6, day_7, day_8,day_9, day_10, day_11, day_12, day_13, day_14, day_15
 
 functions = {
     1: day_1,
@@ -18,5 +18,15 @@ functions = {
     15: day_15,
 }
 
-def solve(day, input=None):
-    return functions[day].solve(input)
+# Dynamic import of day modules
+day_modules = {
+    f"day_{i}": __import__(f"adventapi.days.day_{i}", fromlist=["solve"])
+    for i in range(1, 16)
+}
+
+def solve(day, input_data=None):
+    day_module = day_modules.get(f"day_{int(day)}") 
+    if day_module:
+        return(day_module.solve(input_data))
+    else:
+        return TypeError

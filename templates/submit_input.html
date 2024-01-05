@@ -13,38 +13,5 @@
 </div>
 
 
-<script>
-    $(document).ready(function () {
-        $('#solveButton').click(function () {
-            // Get the textarea value
-            var textData = $('#data').val();
-            if (!textData) {
-                return False
-            }
-            // Update the form action dynamically
-            var selectedDay = $('#dropdown').val();
-            var url = "/day/" + selectedDay + "/" + initialFormAction + "/";
-            $('#input_form').attr('action', url);
-
-            // Make an AJAX request
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: textData,  // Send textarea value as plain text
-                contentType: 'text/plain',  // Set the content type
-                headers: {
-                    'X-CSRFToken': $('[name="csrfmiddlewaretoken"]').val(),
-                },
-                success: function () {
-                    window.location.href = "/";
-                }
-            });
-
-            // Prevent the default form submission
-            return false;
-        });
-    });
-</script>
-
 
 {% endblock %}
