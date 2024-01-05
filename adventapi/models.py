@@ -14,7 +14,7 @@ class DayResolution(models.Model):
     answer_part_two = models.CharField(max_length=1000)
     input = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    code = models.CharField(max_length=1000)
     def __str__(self):
         return str(self.user)  + "_day_" +str(self.day)
 

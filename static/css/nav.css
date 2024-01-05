@@ -22,6 +22,10 @@
     display: inline;
 }
 
+.user_image {
+    width: 20px;
+}
+
 
 @media (max-width:500px) {
 

@@ -6,26 +6,15 @@
 
 <div class="submit_input_container">
     <h2>Submit your input</h2>
-    <select name="dropdown" id="dropdown">
-        <option value="Select a day" disabled="true" selected="true">Select a day</option>
-        {% for day in days %}
-        <option value="{{ day }}">
-            {{ day }}
-        </option>
-        {% endfor %}
-    </select>
-    <form class="input_form" method="POST" action={{user.id}} id="input_form">
-        {% csrf_token %}
-        <textarea id="data"></textarea>
+    <form class="input_form" method="POST" id="input_form" action="solveday/{{id}}">
+        {{form.as_p}}
+        <button type="submit" id="solveButton">Solve</button>
     </form>
-    <button type="button" id="solveButton">Solve</button>
 </div>
 
 
 <script>
     $(document).ready(function () {
-        var initialFormAction = $('#input_form').attr('action');
-
         $('#solveButton').click(function () {
             // Get the textarea value
             var textData = $('#data').val();

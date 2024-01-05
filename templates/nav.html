@@ -1,15 +1,15 @@
 <div class="nav">
-    <h1 class="title">Hi {{ user.username }}!</h1>
-
+    <button id="homeButton">Home</button>
+    <h1 class="title">Advent of code 2022</h1>
     <div class="buttonContainer">
-        <button id="homeButton">Home</button>
-        {% csrf_token %}
+
         <button id="solveNewDayButton">Solve a new day</button>
-        {% csrf_token %}
         <form class="logoutform" method="post" action="{% url 'logout' %}">
             {% csrf_token %}
             <button type="submit">Log Out</button>
         </form>
+        <button id="profileButton"><img class="user_image" src="static/default_user.svg" alt=""></button>
+
 
     </div>
 </div>
@@ -20,4 +20,8 @@
     document.getElementById('homeButton').addEventListener('click', function () {
         window.location.href = "/"
     });
+    document.getElementById('profileButton').addEventListener('click', function () {
+        window.location.href = "/profile"
+    });
+
 </script>

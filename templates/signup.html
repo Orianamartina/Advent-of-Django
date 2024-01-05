@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% comment %} User is already authenticated, redirect to home page {% endcomment %}
+<script>
+    window.location.href = "{% url 'home' %}";
+</script>
+{% else %}
+<div class="signupcontainer">
+    <h2>Sign up</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" action="/signup">Sign up</button>
+    </form>
+    {% endif %}
+    <a href="/accounts/login">login</a>
+</div>
+
+
+{% endblock %}
