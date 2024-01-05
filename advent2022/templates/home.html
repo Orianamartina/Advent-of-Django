@@ -15,8 +15,9 @@
 
         {% if user.is_authenticated %}
         {% include 'nav.html' %}
+
         <h1 class="hometitle">Advent of code 2022</h1>
-        <h1></h1>
+
         <table border="1">
             <thead>
                 <tr>
@@ -27,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in user_info %}
+                {% for item in user_info|dictsort:"day_id" %}
 
                 <tr>
                     <td>{{ item.day_id }}</td>
@@ -44,7 +45,9 @@
                 {% endfor %}
             </tbody>
         </table>
-
+        {% if not user_info %}
+        <p>Submit your input and it will appear here!</p>
+        {% endif %}
         {% else %}
         <p>You are not logged in</p>
         <a href="{% url 'login' %}">Log In</a>

@@ -29,6 +29,9 @@
         $('#solveButton').click(function () {
             // Get the textarea value
             var textData = $('#data').val();
+            if (!textData) {
+                return False
+            }
             // Update the form action dynamically
             var selectedDay = $('#dropdown').val();
             var url = "/day/" + selectedDay + "/" + initialFormAction + "/";
@@ -43,7 +46,9 @@
                 headers: {
                     'X-CSRFToken': $('[name="csrfmiddlewaretoken"]').val(),
                 },
-                // success: window.location.href = "/"
+                success: function () {
+                    window.location.href = "/";
+                }
             });
 
             // Prevent the default form submission

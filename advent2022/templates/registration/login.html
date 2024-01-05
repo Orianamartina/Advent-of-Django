@@ -1,11 +1,21 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock %}
-
 {% block content %}
-<h2>Log In</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Log In</button>
-</form>
+
+{% if user.is_authenticated %}
+{% comment %} User is already authenticated, redirect to home page {% endcomment %}
+<script>
+    window.location.href = "{% url 'home' %}";
+</script>
+{% else %}
+<div class="loginformcontainer">
+    <h2 class="logintitle">Log In</h2>
+    <form id="loginform" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Log In</button>
+    </form>
+    <a href="/signup">Sign up</a>
+</div>
+{% endif %}
 {% endblock %}

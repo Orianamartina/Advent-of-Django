@@ -18,6 +18,11 @@
     font-size: xx-large;
 }
 
+.logoutForm {
+    display: inline;
+}
+
+
 @media (max-width:500px) {
 
 

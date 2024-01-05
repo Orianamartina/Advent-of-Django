@@ -1,22 +1,21 @@
 <div class="nav">
     <h1 class="title">Hi {{ user.username }}!</h1>
 
-    <div>
+    <div class="buttonContainer">
         <button id="homeButton">Home</button>
         {% csrf_token %}
         <button id="solveNewDayButton">Solve a new day</button>
         {% csrf_token %}
-        <button id="logoutButton" type="button">Log Out</button>
+        <form class="logoutform" method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+        </form>
 
     </div>
 </div>
 <script>
     document.getElementById('solveNewDayButton').addEventListener('click', function () {
         window.location.href = "{% url 'submit' %}"
-    });
-
-    document.getElementById('logoutButton').addEventListener('click', function () {
-        window.location.href = "{% url 'logout' %}"
     });
     document.getElementById('homeButton').addEventListener('click', function () {
         window.location.href = "/"

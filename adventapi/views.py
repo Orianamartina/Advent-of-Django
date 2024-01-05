@@ -1,11 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse 
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt    
 from django.contrib.auth.models import User
-from .serializers import UserSerializer
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 import json
 from .models import DayResolution, Day
 # Create your views here.
@@ -27,7 +25,7 @@ def solve_day(request, user_id, day_solve_function, day):
         if request.method == 'POST' and request.body:
             data = request.body.decode('utf-8')
             try:
-                resolution = DayResolution.objects.get(input=data)
+                resolution = DayResolution.objects.get(input=data, user=user_id,day = day)
                 result = {
                     1: resolution.answer_part_one,
                     2: resolution.answer_part_two
@@ -48,7 +46,7 @@ def solve_day(request, user_id, day_solve_function, day):
 
         return JsonResponse(result)
     except IndexError:
-        return JsonResponse({'error': 'Index out of range. Make sure not to leave empty spaces at the end of the input'})
+        return JsonResponse({'error': 'Index out of range. Make sure not to leave empty spaces at the end of the input'}, status=400)
     except Exception as e:
         return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=400)
 
@@ -77,14 +75,16 @@ def submit_input(request):
 
 @csrf_exempt
 
-@api_view(['POST'])
-def create_user(request):
+def signup(request):
     if request.method == 'POST':
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            user = User.objects.get(username = request.data["username"])
-            user.set_password = request.data["password"]
-            user.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
