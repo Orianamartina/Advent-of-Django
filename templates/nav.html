@@ -1,14 +1,15 @@
 <div class="nav">
     <button id="homeButton">Home</button>
-    <h1 class="title">Advent of code 2022</h1>
-    <div class="buttonContainer">
 
+    <div class="buttonContainer">
+        <h1 class="title">Advent of code 2022</h1>
         <button id="solveNewDayButton">Solve a new day</button>
         <form class="logoutform" method="post" action="{% url 'logout' %}">
             {% csrf_token %}
             <button type="submit">Log Out</button>
         </form>
-        <button id="profileButton"><img class="user_image" src="static/default_user.svg" alt=""></button>
+        <a href="/profile/{{user}}"><button id="profileButton"><img class="user_image" src="static/default_user.svg"
+                    alt=""></button></a>
 
 
     </div>

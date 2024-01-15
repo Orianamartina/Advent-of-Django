@@ -29,6 +29,48 @@ button:hover {
     box-shadow: 3px 3px var(--pink);
 }
 
+table {
+    display: block;
+    margin: auto;
+    width: fit-content;
+    border: none;
+}
+
+th,
+td {
+    border: none;
+    max-width: 102ch;
+}
+
+th {
+    padding: 10px;
+    background-color: var(--darkBlue);
+    color: var(--cream);
+    max-width: 30ch;
+}
+
+td {
+    padding: 10px;
+    background-color: var(--lightBlue);
+}
+
+td:hover {
+    background-color: var(--mediumBlue);
+}
+
+pre {
+    color: white;
+
+}
+
+textarea {
+    background-color: var(--darkBlue);
+    border: 1px solid var(--pink);
+    color: var(--lightPink);
+    margin: 10px;
+    border-radius: 20px;
+}
+
 @media (max-width:500px) {
     body {
         font-size: large;

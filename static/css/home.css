@@ -1,37 +1,9 @@
 .homeContainer {
     display: flex;
     flex-direction: column;
-
     align-items: center;
-}
-
-table {
-    display: block;
-    margin: auto;
     width: fit-content;
-    border: none;
-}
-
-th,
-td {
-    border: none;
-    max-width: 102ch;
-}
-
-th {
-    padding: 10px;
-    background-color: var(--darkBlue);
-    color: var(--cream);
-    max-width: 30ch;
-}
-
-td {
-    padding: 10px;
-    background-color: var(--lightBlue);
-}
-
-td:hover {
-    background-color: var(--mediumBlue);
+    padding-top: 100px;
 }
 
 @media (max-width:800px) {

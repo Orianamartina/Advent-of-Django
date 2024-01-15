@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "nav.html"%}
+<div class="homeContainer">
+    <h2>{{user.username}}</h2>
+
+    {% for s in resolutions%}
+    {% include "resolution_card.html" with r=s %}
+    {% endfor %}
+</div>
+{% endblock %}

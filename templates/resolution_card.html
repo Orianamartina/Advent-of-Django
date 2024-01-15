@@ -1,15 +1,13 @@
-{% extends "base.html" %}
-{% block content %}
-
-<div>
-    <div>
-        <small>User: {{r.user}}</small>
-        <small>{{r.language}}</small>
-
+<div class="resolution_card">
+    <div class="top_div">
+        <a href="/profile/{{r.user}}"> <button class="small_button">{{r.user}}</button></a>
+        <small>Day: {{r.day}}</small>
+        <button class="small_button">{{r.language}}</button>
     </div>
+    <p class="comment">
+        {{r.comment }}
+    </p>
     <div>
-
+        <a href="/code/{{r.id}}"> <button>Code</button></a>
     </div>
 </div>
-
-{% endblock %}

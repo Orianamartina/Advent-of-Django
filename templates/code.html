@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% include 'nav.html' %}
+
+<div style="margin: auto; width: fit-content; ">
+    <h3>Day {{day}} by {{user}}</h3>
+    <pre>
+        <code>
+          {{code}}
+        </code>
+    </pre>
+
+
+    <div>
+        <h3>Comments:</h3>
+        {% for c in replies %}
+        {% include "reply.html" with c=c %}
+        {% endfor %}
+    </div>
+    <div>
+        <h3>Leave your comment:</h3>
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+    </div>
+</div>
+
+{% endblock %}

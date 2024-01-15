@@ -1,0 +1,23 @@
+.resolution_card {
+    width: 50%;
+    align-self: center;
+    margin-top: 3%;
+    padding: 40px;
+    border: 1px solid var(--pink);
+    border-radius: 10px;
+}
+
+.top_div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.small_button {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.small_button:hover {
+    box-shadow: none;
+    color: var(--pink);
+}

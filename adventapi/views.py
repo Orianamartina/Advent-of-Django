@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse 
 from django.views.decorators.csrf import csrf_exempt    
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from .forms.submit_answer import SubmissionForm
+from django.utils.html import escape
 import json
-from .models import DayResolution, Day, RecentResolutions
+from .models import DayResolution, Day, RecentResolutions, Reply
 from .days.solve import solve
 # Create your views here.
 @csrf_exempt
@@ -45,8 +46,9 @@ def solve_day(request, user_id):
                             answer_part_one=result[1],
                             answer_part_two=result[2],
                             language = clean_form["language"],
-                            code = clean_form["code"],
-                            user = User.objects.get(id=user_id)
+                            code = escape(clean_form["code"])   ,
+                            user = User.objects.get(id=user_id),
+                            comment = clean_form['comment']
                         )
                         RecentResolutions.objects.create(
                             user = User.objects.get(id=user_id),
@@ -70,12 +72,13 @@ def get_user_days(request, user_id):
             return JsonResponse({'data': data})
         except Exception as e:
             return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=400)
-    
+
+
 
 def home(request):
-    recent = RecentResolutions.objects.select_related('resolution')
+    resolutions = DayResolution.objects.order_by('-id')[:10]
     user_id = request.user.id
-    return render(request, 'home.html', {'user_id': user_id, 'recent': recent})
+    return render(request, 'home.html', {'user_id': user_id, 'recent': resolutions})
 
 def submit_input(request):
     days = [i for i in range(1,26)]
@@ -104,3 +107,21 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+def user_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    resolutions = DayResolution.objects.filter(user=user).order_by("id")
+    return render(request, 'user_profile.html', {'user': user, 'resolutions': resolutions})
+
+def resolution_code(request, resolution_id):
+    res = get_object_or_404(DayResolution, id=resolution_id)
+    comments = Reply.objects.filter(resolution = resolution_id)
+    return render(request, 'code.html', {'code': res.code, 'day': res.day, 'replies': comments, 'user': res.user})
+
+def save_comment(request, resolution_id):
+    comment = Reply.objects.create(
+        user = User.objects.get(id= request.user.id),
+        resolution = DayResolution.objects.get(id = resolution_id),
+        text = request.body
+    )
+    return JsonResponse({"Success":"Comment succesfully submited"})
