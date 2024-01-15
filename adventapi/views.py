@@ -116,12 +116,16 @@ def user_profile(request, username):
 def resolution_code(request, resolution_id):
     res = get_object_or_404(DayResolution, id=resolution_id)
     comments = Reply.objects.filter(resolution = resolution_id)
-    return render(request, 'code.html', {'code': res.code, 'day': res.day, 'replies': comments, 'user': res.user})
+    return render(request, 'code.html', {'code': res.code, 'day': res.day, 'replies': comments, 'id': resolution_id})
 
 def save_comment(request, resolution_id):
-    comment = Reply.objects.create(
+    print((request.body.decode('utf-8')))
+    comment_data = json.loads(request.body.decode('utf-8'))
+    comment_text = comment_data.get('comment')
+
+    Reply.objects.create(
         user = User.objects.get(id= request.user.id),
         resolution = DayResolution.objects.get(id = resolution_id),
-        text = request.body
+        text = comment_text
     )
     return JsonResponse({"Success":"Comment succesfully submited"})

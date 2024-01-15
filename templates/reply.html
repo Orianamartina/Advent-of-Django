@@ -1,6 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/reply.css' %}">
+
 <div class="reply_container">
-    {{c.user}}:
-    <p>
+    <a href="/profile/{{ c.user }}"> <button class="small_button">{{ c.user }}</button></a>
+    <p style="margin-left: 10px;">
         {{c.text}}
     </p>
 </div>
+
+{% endblock %}

@@ -2,10 +2,31 @@
 {% block content %}
 {% include "nav.html"%}
 <div class="homeContainer">
-    <h2>{{user.username}}</h2>
+    <div class="imageprofilecontainer">
+        <img id="catImage" alt="">
+        <h2>{{ user.username }}</h2>
+    </div>
 
-    {% for s in resolutions%}
+
+    {% for s in resolutions %}
     {% include "resolution_card.html" with r=s %}
     {% endfor %}
 </div>
+
+<script>
+    $(document).ready(function () {
+        // Make an AJAX request to the Cat API
+        $.ajax({
+            url: 'https://api.thecatapi.com/v1/images/search',
+            method: 'GET',
+            success: function (data) {
+                // Set the image source with the fetched URL
+                $('#catImage').attr('src', data[0].url);
+            },
+            error: function () {
+                console.error('Failed to fetch cat image');
+            }
+        });
+    });
+</script>
 {% endblock %}

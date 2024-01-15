@@ -5,8 +5,8 @@
     width: 60%;
     margin: auto;
     margin-top: 5%;
-    gap: 30px;
-
+    gap: 50px;
+    margin-bottom: 100px;
 }
 
 .input_form {
@@ -14,6 +14,7 @@
     flex-direction: column;
     width: 100%;
     align-items: center;
+    gap: 30px;
 
 }
 
@@ -26,6 +27,8 @@
 
 .custom-select {
     width: 10%;
+    background-color: var(--darkBlue);
+    color: var(--lightPink);
 }
 
 label {
@@ -34,6 +37,7 @@ label {
 
 .solveButton {
     width: fit-content;
+
 }
 
 textarea {

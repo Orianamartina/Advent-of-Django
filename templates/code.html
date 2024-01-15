@@ -1,10 +1,7 @@
-{% extends "base.html" %}
-{% block content %}
-
 {% include 'nav.html' %}
 
 <div style="margin: auto; width: fit-content; ">
-    <h3>Day {{day}} by {{user}}</h3>
+    <h3>Day {{day}}</h3>
     <pre>
         <code>
           {{code}}
@@ -12,16 +9,52 @@
     </pre>
 
 
-    <div>
+    <div style="width: fit-content;">
         <h3>Comments:</h3>
+        {% if not replies %}
+        <small>There are no comments yet...</small>
+        {% else %}
         {% for c in replies %}
         {% include "reply.html" with c=c %}
         {% endfor %}
+        {% endif %}
     </div>
-    <div>
+    <form style="margin-top:  50px;width: 50%; display: flex; flex-direction: column; gap:15px; align-items: center;"
+        class="commentForm" method="POST" action="/comment/{{ id }}">
+        {% csrf_token %}
         <h3>Leave your comment:</h3>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-    </div>
-</div>
+        <textarea name="comment" id="commentTextarea" cols="30" rows="10"></textarea>
+        <button type="submit">Submit</button>
+    </form>
 
-{% endblock %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Assuming you have jQuery included
+            $('form.commentForm').on('submit', function (e) {
+                e.preventDefault(); // Prevent the form from submitting normally
+
+                // Get the CSRF token from the page
+                var csrf_token = $('[name="csrfmiddlewaretoken"]').val();
+
+                // Make an AJAX request to handle form submission
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: 'POST',
+                    headers: { 'X-CSRFToken': csrf_token }, // Include CSRF token in headers
+                    data: JSON.stringify({ comment: $('#commentTextarea').val() }),
+                    contentType: 'application/json',  // Specify content type
+                    success: function (data) {
+                        // Reload the page on success
+                        location.reload(true);
+                    },
+                    error: function () {
+                        console.error('Failed to submit comment');
+                    }
+                });
+            });
+        });
+    </script>
+
+
+</div>

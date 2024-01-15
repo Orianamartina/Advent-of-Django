@@ -1,13 +1,35 @@
 <div class="resolution_card">
     <div class="top_div">
-        <a href="/profile/{{r.user}}"> <button class="small_button">{{r.user}}</button></a>
-        <small>Day: {{r.day}}</small>
-        <button class="small_button">{{r.language}}</button>
+        <div>
+            <img id="catImage_{{ r.id }}" src="" alt="" class="smallImage">
+            <a href="/profile/{{ r.user }}"> <button class="small_button">{{ r.user }}</button></a>
+        </div>
+
+        <small>Day: {{ r.day }} <button class="small_button">{{ r.language }}</button></small>
+
     </div>
     <p class="comment">
-        {{r.comment }}
+        {{ r.comment }}
     </p>
-    <div>
-        <a href="/code/{{r.id}}"> <button>Code</button></a>
+    <div style="display: flex; gap: 25px;">
+        <a href="/code/{{ r.id }}"> <button>Code</button></a>
+        <button>Input</button>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            // Make an AJAX request to the Cat API
+            $.ajax({
+                url: 'https://api.thecatapi.com/v1/images/search',
+                method: 'GET',
+                success: function (data) {
+                    // Set the image source with the fetched URL
+                    $('#catImage_{{ r.id }}').attr('src', data[0].url);
+                },
+                error: function () {
+                    console.error('Failed to fetch cat image');
+                }
+            });
+        });
+    </script>
 </div>

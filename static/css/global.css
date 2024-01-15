@@ -4,6 +4,7 @@
     --mediumBlue: #586ae2;
     --lightPink: #e0d9f6;
     --darkBlue: #131027;
+    --green: #83ff49;
 }
 
 body {
@@ -69,6 +70,45 @@ textarea {
     color: var(--lightPink);
     margin: 10px;
     border-radius: 20px;
+    box-shadow: 0px 0px 3px white;
+}
+
+textarea:focus {
+    border: none;
+}
+
+input {
+    background-color: var(--darkBlue);
+    border: 1px solid var(--pink);
+    color: var(--lightPink);
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.imageprofilecontainer {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+
+
+}
+
+.imageprofilecontainer img {
+    display: inline;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.smallImage {
+    width: 60px;
+    height: 60px;
+    display: inline;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    box-shadow: 3px 3px var(--lightBlue);
 }
 
 @media (max-width:500px) {
