@@ -117,7 +117,8 @@ def resolution_code(request, resolution_id):
     return render(request, 'code.html', {'res': res, 'replies': comments, 'id': resolution_id,})
 
 def save_comment(request, resolution_id):
-    comment_text = request.POST.get('comment')
+    #comment_text = request.POST.get('comment')
+    comment_text = json.loads(request.data)
     user = CustomUser.objects.get(id=request.user.id)
     resolution = DayResolution.objects.get(id=resolution_id)
 

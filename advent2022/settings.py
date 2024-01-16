@@ -39,17 +39,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'adventapi',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    "django_extensions",
+    "debug_toolbar"
 ]
-
+"133-955-303"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'advent2022.urls'
@@ -130,3 +134,9 @@ LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 
 AUTH_USER_MODEL = 'adventapi.CustomUser'
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
