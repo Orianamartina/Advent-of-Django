@@ -1,12 +1,18 @@
+{% load static %}
 <div class="resolution_card">
     <div class="top_div">
         <div>
-            <img id="catImage_{{ r.id }}" src="" alt="" class="smallImage">
-            <a href="/profile/{{ r.user }}"> <button class="small_button">{{ r.user }}</button></a>
+            {% if r.user.image %}
+            <img src="{{ r.user.image }}" alt="" class="smallImage">
+            {% else %}
+            <img src="{% static 'default_user.svg' %}" alt="" class="smallImage">
+            {% endif %}
+            <a href="/profile/{{ r.user }}">
+                <button class="small_button">{{ r.user.username }}</button>
+            </a>
         </div>
 
-        <small>Day: {{ r.day }} <button class="small_button">{{ r.language }}</button></small>
-
+        <small style="font-size:medium;">Day: {{ r.day }} <button class="small_button">{{ r.language }}</button></small>
     </div>
     <p class="comment">
         {{ r.comment }}
@@ -15,12 +21,12 @@
         <a href="/code/{{ r.id }}"> <button>Code</button></a>
         <button>Input</button>
     </div>
-
+    <small style="padding-top: 10px;"> {{r.comments_quantity}} comments</small>
     <script>
         $(document).ready(function () {
             // Make an AJAX request to the Cat API
             $.ajax({
-                url: 'https://api.thecatapi.com/v1/images/search',
+                url: '',
                 method: 'GET',
                 success: function (data) {
                     // Set the image source with the fetched URL

@@ -1,0 +1,70 @@
+.logged_in_profile_container {
+    margin-top: 100px;
+}
+
+.logged_in_profile_image_container {
+    display: flex;
+    margin: auto;
+    width: fit-content;
+    align-items: center;
+    gap: 30px;
+}
+
+.logged_in_profile_image {
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.logged_in_profile_image:hover {
+    filter: brightness(50%);
+}
+
+.profile-image-container {
+    position: relative;
+    display: inline-block;
+    /* Ensures the container takes only the space needed by the image */
+}
+
+.profile-image-container::after {
+    content: 'Change Image';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Adjust the overlay background color and opacity as needed */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
+.profile-image-container:hover::after {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.uploadImage {
+    background-color: var(--mediumBlue);
+    width: 150px;
+    height: 150px;
+    font-size: larger;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+}
+
+.uploadImage:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

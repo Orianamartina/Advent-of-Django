@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "nav.html"%}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/user/logged_in_profile.css' %}">
+<div class="logged_in_profile_container">
+    <div class="logged_in_profile_image_container">
+        {% if user.image %}
+        <a href="/updateimage">
+            <div class="profile-image-container">
+                <img class="logged_in_profile_image" src="{{user.image}}" alt="">
+            </div>
+        </a>
+
+        {% else %}
+        <a style="text-decoration: none; color: white;" href="/updateimage">
+            <div class="uploadImage">
+                <small>Get Image</small>
+            </div>
+        </a>
+
+        {% endif %}
+        <h2>{{user.username}}</h2>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

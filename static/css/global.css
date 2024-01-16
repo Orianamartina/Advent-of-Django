@@ -89,7 +89,7 @@ input {
     display: flex;
     gap: 20px;
     align-items: center;
-
+    margin: auto;
 
 }
 
@@ -108,7 +108,6 @@ input {
     object-fit: cover;
     border-radius: 50%;
     margin-bottom: 10px;
-    box-shadow: 3px 3px var(--lightBlue);
 }
 
 @media (max-width:500px) {

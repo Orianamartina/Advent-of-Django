@@ -8,10 +8,13 @@
             {% csrf_token %}
             <button type="submit">Log Out</button>
         </form>
-        <a href="/profile/{{user}}"><button id="profileButton"><img class="user_image" src="static/default_user.svg"
+        {% if user.image %}
+        <a href="/profile"><button id="profileButton"><img class="user_image" src="{{user.image}}" alt=""></button></a>
+        {% else %}
+        <a href="/profile"><button id="profileButton"><img class="user_image" src="static/default_user.svg"
                     alt=""></button></a>
 
-
+        {% endif %}
     </div>
 </div>
 <script>

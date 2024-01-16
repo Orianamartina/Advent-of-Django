@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse 
 from django.views.decorators.csrf import csrf_exempt    
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from adventapi.forms.customCreateUser import CustomCreateUserForm
 from django.contrib.auth import login, authenticate
 from .forms.submit_answer import SubmissionForm
 from django.utils.html import escape
 import json
-from .models import DayResolution, Day, RecentResolutions, Reply
+from .models import DayResolution, Day, RecentResolutions, Reply, CustomUser
 from .days.solve import solve
 # Create your views here.
 @csrf_exempt
@@ -47,11 +46,11 @@ def solve_day(request, user_id):
                             answer_part_two=result[2],
                             language = clean_form["language"],
                             code = escape(clean_form["code"])   ,
-                            user = User.objects.get(id=user_id),
+                            user = CustomUser.objects.get(id=user_id),
                             comment = clean_form['comment']
                         )
                         RecentResolutions.objects.create(
-                            user = User.objects.get(id=user_id),
+                            user = CustomUser.objects.get(id=user_id),
                             resolution = DayResolution.objects.get(user=user_id, day=clean_form["day"])
                         )
                 return JsonResponse({"Success":"Day resolution succesfully submited"})
@@ -86,17 +85,11 @@ def submit_input(request):
     form = SubmissionForm()
     return render(request, 'submit_input.html', {'days': days, 'id': user.id, 'form':form})
 
-def profile(request):
-    user = request.user    
-    resolutions = DayResolution.objects.filter(user = user.id)
-    data = list(resolutions.values())
-    return render(request, 'profile/profile.html', {'user': user, 'resolutions':data})
-
 @csrf_exempt
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomCreateUserForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -105,27 +98,54 @@ def signup(request):
             login(request, user)
             return redirect('home')
     else:
-        form = UserCreationForm()
+        form = CustomCreateUserForm()
     return render(request, 'signup.html', {'form': form})
 
 def user_profile(request, username):
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(CustomUser, username=username)
     resolutions = DayResolution.objects.filter(user=user).order_by("id")
     return render(request, 'user_profile.html', {'user': user, 'resolutions': resolutions})
+
+def my_profile(request):
+    id = request.user.id
+    user = CustomUser.objects.get(id=id)
+    return render(request, 'user/logged_in_profile.html', {'user': user})
 
 def resolution_code(request, resolution_id):
     res = get_object_or_404(DayResolution, id=resolution_id)
     comments = Reply.objects.filter(resolution = resolution_id)
-    return render(request, 'code.html', {'code': res.code, 'day': res.day, 'replies': comments, 'id': resolution_id})
+    return render(request, 'code.html', {'res': res, 'replies': comments, 'id': resolution_id,})
 
 def save_comment(request, resolution_id):
-    print((request.body.decode('utf-8')))
-    comment_data = json.loads(request.body.decode('utf-8'))
-    comment_text = comment_data.get('comment')
+    comment_text = request.POST.get('comment')
+    user = CustomUser.objects.get(id=request.user.id)
+    resolution = DayResolution.objects.get(id=resolution_id)
 
+    # Create a new comment
     Reply.objects.create(
-        user = User.objects.get(id= request.user.id),
-        resolution = DayResolution.objects.get(id = resolution_id),
-        text = comment_text
+        user=user,
+        resolution=resolution,
+        text=comment_text
     )
+
+    # Increment the comments_quantity of the resolution
+    resolution.comments_quantity += 1
+    resolution.save()
+
     return JsonResponse({"Success":"Comment succesfully submited"})
+    
+
+def upload_image(request):
+    if request.method == "POST":
+        try:
+            id = request.user.id
+            user = CustomUser.objects.get(id=id)
+            image = request.POST.get('image_url')
+            user.image = image
+            user.save()
+            return JsonResponse({"Success": "Image succesfully updated"})
+        except:
+            return JsonResponse({"Error": "An error ocurred"})
+
+def update_image_template_view(request):
+    return render(request, 'user/upload_image.html')

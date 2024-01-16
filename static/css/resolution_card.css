@@ -5,6 +5,7 @@
     padding: 40px;
     border: 1px solid var(--pink);
     border-radius: 10px;
+    height: fit-content;
 }
 
 .top_div {

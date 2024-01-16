@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "nav.html"%}
+{% load static %}
+{% csrf_token %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/user/upload_image.css' %}">
+<div class="pick_image_container">
+
+    <img id="random-image" src="{{ image_url }}" alt="Random Image">
+    <div class="get_image_button_container">
+        <button id="get-image-btn">Get Image</button>
+        <button id="save-image-btn">Save Image</button>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Function to fetch a new random image from the API
+        function getRandomImage() {
+            fetch('https://api.thecatapi.com/v1/images/search')
+                .then(response => response.json())
+                .then(data => {
+                    $('#random-image').attr('src', data[0].url);
+                    console.log(data)
+                })
+                .catch(error => {
+                    console.error('Error fetching random image:', error);
+                });
+        }
+
+        // Initial call to get a random image when the page loads
+        getRandomImage();
+
+        // Event listener for the 'Get Image' button
+        $('#get-image-btn').click(function () {
+            getRandomImage();
+        });
+
+        $('#save-image-btn').click(function () {
+            // Get the CSRF token from the page
+            var csrftoken = $('input[name=csrfmiddlewaretoken]').val();
+
+            // Perform the logic to save the current image URL with CSRF token
+            $.ajax({
+                type: 'POST',
+                url: '/uploadimage/',
+                data: { image_url: $('#random-image').attr('src') },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                },
+                success: function () {
+                    alert('Image saved successfully!');
+                    window.location.href = '/';
+                },
+                error: function (error) {
+                    console.error('Error saving image:', error);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
