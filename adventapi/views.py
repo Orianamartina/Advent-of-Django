@@ -47,7 +47,7 @@ def solve_day(request, user_id):
                             language = clean_form["language"],
                             code = escape(clean_form["code"])   ,
                             user = CustomUser.objects.get(id=user_id),
-                            comment = clean_form['comment']
+                            description = clean_form['comment']
                         )
                         RecentResolutions.objects.create(
                             user = CustomUser.objects.get(id=user_id),

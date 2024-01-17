@@ -37,9 +37,9 @@ class DayResolution(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     language = models.CharField(max_length=40)
     code = models.CharField(max_length=100000)
-    comment = models.TextField()
+    description = models.TextField()
     comments_quantity = models.IntegerField(default=0)
-
+    link_to_repo = models.CharField(max_length=200)
     def __str__(self):
         return str(self.user)  + "_day_" +str(self.day)
 

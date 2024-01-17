@@ -16,7 +16,7 @@
         <small>There are no comments yet...</small>
         {% else %}
         {% for c in replies %}
-        {% include "reply.html" with c=c %}
+        {% include "comment.html" with c=c %}
         {% endfor %}
         {% endif %}
     </div>

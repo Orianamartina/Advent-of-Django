@@ -7,7 +7,9 @@
 <script>
     window.location.href = "{% url 'home' %}";
 </script>
-{% else %}
+{% else %
+<link rel="stylesheet" type="text/css" href="{% static 'css/registration/login.css' %}">
+}
 <div class="loginformcontainer">
     <h2 class="logintitle">Log In</h2>
     <form id="loginform" method="post">

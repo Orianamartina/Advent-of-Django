@@ -6,4 +6,4 @@ class SubmissionForm(forms.Form):
     day = forms.ChoiceField(choices=days_choices,widget=forms.Select(attrs={'class': 'custom-select'}))
     input = forms.CharField(widget=forms.Textarea(attrs={'class':'input-input'}))
     code = forms.CharField(widget=forms.Textarea(attrs={'class':'input-input'}))
-    comment = forms.CharField(widget=forms.Textarea(attrs={'class':'input-input'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'class':'input-input'}))

@@ -7,6 +7,8 @@
     window.location.href = "{% url 'home' %}";
 </script>
 {% else %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+
 <div class="signupcontainer">
     <h2>Sign up</h2>
     <form method="post">
