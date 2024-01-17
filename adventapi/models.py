@@ -41,14 +41,21 @@ class DayResolution(models.Model):
     description = models.TextField()
     comments_quantity = models.IntegerField(default=0)
     link_to_repo = models.CharField(max_length=200)
+    likes = models.IntegerField()
     language = models.ForeignKey(Language, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return str(self.user)  + "_day_" +str(self.day)
+
+
+class Like(models.Model):
+    post = models.ForeignKey(DayResolution, models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
 class Comment(models.Model):
     user = models.ForeignKey(CustomUser, on_delete =models.CASCADE)
     text = models.CharField(max_length=1000)
     resolution = models.ForeignKey(DayResolution, on_delete=models.CASCADE)
+
 
 class RecentResolutions(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

@@ -6,7 +6,7 @@ from django.contrib.auth import login, authenticate
 from .forms.submit_answer import SubmissionForm
 from django.utils.html import escape
 import json
-from .models import DayResolution, Day,Comment, CustomUser
+from .models import DayResolution, Day,Comment, CustomUser,Language
 from .days.solve import solve
 # Create your views here.
 @csrf_exempt
@@ -44,7 +44,7 @@ def solve_day(request, user_id):
                             day=Day.objects.get(number=clean_form["day"]),
                             answer_part_one=result[1],
                             answer_part_two=result[2],
-                            language = clean_form["language"],
+                            language = Language.objects.get(name=clean_form["language"]),
                             code = escape(clean_form["code"])   ,
                             user = CustomUser.objects.get(id=user_id),
                             description = clean_form['description']
@@ -57,7 +57,17 @@ def solve_day(request, user_id):
     except Exception as e:
         return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=400)
 
-@csrf_exempt
+
+def delete_day(request, day):
+    if request.method == "POST":
+        try:
+            user = request.user.id
+            res = DayResolution.objects.get(user=user, day= day)
+            res.delete()
+            return JsonResponse({"Success": "Resolution succesfully deleted"})
+        except Exception as e:
+            return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=400)
+
 
 def get_user_days(request, user_id):
     if request.method == "GET":

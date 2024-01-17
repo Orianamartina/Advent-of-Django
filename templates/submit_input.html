@@ -27,6 +27,20 @@
 
 
 </div>
+<script>
+    // Add JavaScript to handle form submission and redirection
+    document.getElementById('input_form').addEventListener('submit', function (event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Perform any additional actions before submitting the form (if needed)
+
+        // Submit the form
+        this.submit();
+        window.location.href = "/";
+
+    });
+</script>
 
 
 

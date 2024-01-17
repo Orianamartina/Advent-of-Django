@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock %}
 {% block content %}
-
+{% load static %}
 {% if user.is_authenticated %}
 {% comment %} User is already authenticated, redirect to home page {% endcomment %}
 <script>
     window.location.href = "{% url 'home' %}";
 </script>
-{% else %
+{% else %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/registration/login.css' %}">
-}
+
 <div class="loginformcontainer">
     <h2 class="logintitle">Log In</h2>
     <form id="loginform" method="post">

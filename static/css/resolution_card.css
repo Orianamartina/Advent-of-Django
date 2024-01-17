@@ -22,3 +22,13 @@
     box-shadow: none;
     color: var(--pink);
 }
+
+.likeButton {
+    background-color: none;
+    box-shadow: none;
+}
+
+.likeButton:hover {
+    cursor: pointer;
+    transform: scale(110%);
+}
