@@ -20,9 +20,27 @@
         </a>
 
         {% endif %}
-        <h2>{{user.username}}</h2>
-    </div>
+        <div>
+            <h2>{{user.username}}</h2>
+            <small><button class="small_button">Edit profile</button></small>
+        </div>
 
+    </div>
+    <!-- <div>
+        {% include "user/profile_data.html" with user=user %}
+    </div> -->
+    <h3 style="text-align: center;">Your submits: </h3>
+    <div class="profile_cards_container">
+
+
+        {% for r in r %}
+
+        {% include 'user/profile_cards.html' with r=r %}
+
+        {% endfor %}
+
+
+    </div>
 
 </div>
 

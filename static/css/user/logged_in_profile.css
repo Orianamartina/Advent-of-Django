@@ -24,7 +24,7 @@
 .profile-image-container {
     position: relative;
     display: inline-block;
-    /* Ensures the container takes only the space needed by the image */
+    margin-bottom: 50px;
 }
 
 .profile-image-container::after {
@@ -67,4 +67,15 @@
 .uploadImage:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+.profile_cards_container {
+    width: 80%;
+    height: 60vh;
+    overflow-y: scroll;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
 }

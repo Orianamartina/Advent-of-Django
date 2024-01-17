@@ -6,7 +6,7 @@ from django.contrib.auth import login, authenticate
 from .forms.submit_answer import SubmissionForm
 from django.utils.html import escape
 import json
-from .models import DayResolution, Day, RecentResolutions, Reply, CustomUser
+from .models import DayResolution, Day,Comment, CustomUser
 from .days.solve import solve
 # Create your views here.
 @csrf_exempt
@@ -47,11 +47,7 @@ def solve_day(request, user_id):
                             language = clean_form["language"],
                             code = escape(clean_form["code"])   ,
                             user = CustomUser.objects.get(id=user_id),
-                            description = clean_form['comment']
-                        )
-                        RecentResolutions.objects.create(
-                            user = CustomUser.objects.get(id=user_id),
-                            resolution = DayResolution.objects.get(user=user_id, day=clean_form["day"])
+                            description = clean_form['description']
                         )
                 return JsonResponse({"Success":"Day resolution succesfully submited"})
             return JsonResponse({"error": "invalid form"})
@@ -109,11 +105,12 @@ def user_profile(request, username):
 def my_profile(request):
     id = request.user.id
     user = CustomUser.objects.get(id=id)
-    return render(request, 'user/logged_in_profile.html', {'user': user})
+    res = DayResolution.objects.filter(user = user)
+    return render(request, 'user/logged_in_profile.html', {'user': user, "r": res})
 
 def resolution_code(request, resolution_id):
     res = get_object_or_404(DayResolution, id=resolution_id)
-    comments = Reply.objects.filter(resolution = resolution_id)
+    comments = Comment.objects.filter(resolution = resolution_id)
     return render(request, 'code.html', {'res': res, 'replies': comments, 'id': resolution_id,})
 
 def save_comment(request, resolution_id):
@@ -123,7 +120,7 @@ def save_comment(request, resolution_id):
     resolution = DayResolution.objects.get(id=resolution_id)
 
     # Create a new comment
-    Reply.objects.create(
+    Comment.objects.create(
         user=user,
         resolution=resolution,
         text=comment_text

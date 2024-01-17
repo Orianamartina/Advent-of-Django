@@ -1,0 +1,20 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/user/profile_cards.css' %}">
+
+<div class="profile_card_container">
+
+    <div>
+        <small>Day: {{r.day}}</small>
+    </div>
+    <div style="display: flex; justify-content: space-around; width: 70%;">
+        <a href="/code/{{r.id}}"><button>Code</button></a>
+        <button>Input</button>
+        <button>Repo</button>
+    </div>
+    <div style="display: flex; justify-content: space-around; width: 70%;">
+
+        <button class="small_button">Edit</button>
+        <button class="small_button">Delete</button>
+    </div>
+
+</div>

@@ -10,6 +10,7 @@
             <a href="/profile/{{ r.user }}">
                 <button class="small_button">{{ r.user.username }}</button>
             </a>
+
         </div>
 
         <small style="font-size:medium;">Day: {{ r.day }} <button class="small_button">{{ r.language }}</button></small>
@@ -21,22 +22,12 @@
     <div style="display: flex; gap: 25px;">
         <a href="/code/{{ r.id }}"> <button>Code</button></a>
         <button>Input</button>
+        {% if r.link_to_repo != "none" %}
+        <a href="{{ r.link_to_repo }}">
+            <button class="small_button">Repo</button>
+        </a>
+        {% endif %}
     </div>
     <small style="padding-top: 10px;"> {{r.comments_quantity}} comments</small>
-    <script>
-        $(document).ready(function () {
-            // Make an AJAX request to the Cat API
-            $.ajax({
-                url: '',
-                method: 'GET',
-                success: function (data) {
-                    // Set the image source with the fetched URL
-                    $('#catImage_{{ r.id }}').attr('src', data[0].url);
-                },
-                error: function () {
-                    console.error('Failed to fetch cat image');
-                }
-            });
-        });
-    </script>
+
 </div>
