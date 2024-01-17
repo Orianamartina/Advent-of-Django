@@ -27,6 +27,8 @@ class CustomUser(AbstractUser):
         related_name='custom_user_set',  # Add related_name to resolve the clash
         related_query_name='custom_user',
     )
+class Language(models.Model):
+    name = models.CharField(max_length=100)
 
 class DayResolution(models.Model):
     id = models.IntegerField(primary_key = True)
@@ -35,11 +37,11 @@ class DayResolution(models.Model):
     answer_part_two = models.CharField(max_length=1000)
     input = models.TextField()
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    language = models.CharField(max_length=40)
     code = models.CharField(max_length=100000)
     description = models.TextField()
     comments_quantity = models.IntegerField(default=0)
     link_to_repo = models.CharField(max_length=200)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return str(self.user)  + "_day_" +str(self.day)
 
