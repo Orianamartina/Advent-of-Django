@@ -6,7 +6,7 @@ from django.contrib.auth import login, authenticate
 from .forms.submit_answer import SubmissionForm
 from django.utils.html import escape
 import json
-from .models import DayResolution, Day,Comment, CustomUser,Language
+from .models import DayResolution, Day,Comment, CustomUser,Language, Like
 from .days.solve import solve
 # Create your views here.
 @csrf_exempt
@@ -83,6 +83,12 @@ def get_user_days(request, user_id):
 def home(request):
     resolutions = DayResolution.objects.order_by('-id')[:10]
     user_id = request.user.id
+    user = CustomUser.objects.get(id = user_id)
+    likes = []
+    for res in resolutions:
+        likes.append(Like.objects.filter(user = user, post = res))
+    print(likes)
+    
     return render(request, 'home.html', {'user_id': user_id, 'recent': resolutions})
 
 def submit_input(request):
@@ -157,3 +163,18 @@ def upload_image(request):
 
 def update_image_template_view(request):
     return render(request, 'user/upload_image.html')
+
+def like_post(request, post_id):
+    if request.method == "POST":
+        try:
+            post = DayResolution.objects.get(id =post_id)
+            post.likes += 1
+            post.save()
+            Like.objects.create(
+                user = request.user,
+                post = post
+            )
+            return JsonResponse({"success": "Post liked"})
+
+        except Exception as e:
+            return JsonResponse({"error: ": e})

@@ -85,6 +85,16 @@ input {
     border-radius: 10px;
 }
 
+a {
+    text-decoration: none;
+    color: var(--lightPink);
+}
+
+a:hover {
+    cursor: pointer;
+    color: var(--pink);
+}
+
 .imageprofilecontainer {
     display: flex;
     gap: 20px;

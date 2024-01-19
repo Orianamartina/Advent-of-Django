@@ -24,11 +24,12 @@
 }
 
 .likeButton {
-    background-color: none;
+    background-color: transparent;
     box-shadow: none;
 }
 
 .likeButton:hover {
     cursor: pointer;
     transform: scale(110%);
+    box-shadow: none;
 }

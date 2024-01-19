@@ -8,7 +8,6 @@
     <h2>Recent submits:</h2>
     {% for s in recent%}
     {% include "resolution_card.html" with r=s %}
-
     {% endfor %}
     {% else %}
     <p>You are not logged in</p>

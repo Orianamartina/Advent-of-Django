@@ -46,11 +46,6 @@ class DayResolution(models.Model):
     def __str__(self):
         return str(self.user)  + "_day_" +str(self.day)
 
-
-class Like(models.Model):
-    post = models.ForeignKey(DayResolution, models.CASCADE)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-
 class Comment(models.Model):
     user = models.ForeignKey(CustomUser, on_delete =models.CASCADE)
     text = models.CharField(max_length=1000)
@@ -61,3 +56,10 @@ class RecentResolutions(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     resolution = models.ForeignKey(DayResolution, on_delete=models.CASCADE)
 
+class Like(models.Model):
+
+    post = models.ForeignKey(DayResolution, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username} liked {self.post.user} "
