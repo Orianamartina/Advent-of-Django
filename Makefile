@@ -10,3 +10,6 @@ migrate:
 
 makemigrations:
 	poetry run python manage.py makemigrations
+
+shell:
+	python manage.py shell

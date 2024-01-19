@@ -26,10 +26,32 @@
 .likeButton {
     background-color: transparent;
     box-shadow: none;
+    border: 1px solid red;
+    border-radius: 5px;
+    color: red;
 }
 
 .likeButton:hover {
     cursor: pointer;
     transform: scale(110%);
+    box-shadow: none;
+}
+
+.likeButtonUser {
+    background-color: transparent;
+    box-shadow: none;
+    border: 1px solid red;
+    border-radius: 5px;
+    color: red;
+}
+
+.likeButtonUser:hover {
+    box-shadow: none;
+    cursor: default;
+}
+
+.unlikeButton {
+    background-color: red;
+    color: white;
     box-shadow: none;
 }

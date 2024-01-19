@@ -86,10 +86,11 @@ def home(request):
     user = CustomUser.objects.get(id = user_id)
     likes = []
     for res in resolutions:
-        likes.append(Like.objects.filter(user = user, post = res))
-    print(likes)
-    
-    return render(request, 'home.html', {'user_id': user_id, 'recent': resolutions})
+        l = Like.objects.filter(user = user, post = res)
+        if l:
+            for i in l:
+                likes.append(i.post_id)
+    return render(request, 'home.html', {'user_id': user_id, 'recent': resolutions, "likes": likes})
 
 def submit_input(request):
     days = [i for i in range(1,26)]
@@ -175,6 +176,18 @@ def like_post(request, post_id):
                 post = post
             )
             return JsonResponse({"success": "Post liked"})
+
+        except Exception as e:
+            return JsonResponse({"error: ": e})
+        
+def unlike_post(request, post_id):
+    if request.method == "POST":
+        try:
+            post = DayResolution.objects.get(id =post_id)
+            post.likes -= 1
+            post.save()
+            Like.objects.get(post = post, user = request.user).delete()
+            return JsonResponse({"success": "Post unliked"})
 
         except Exception as e:
             return JsonResponse({"error: ": e})
