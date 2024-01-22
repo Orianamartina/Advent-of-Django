@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Day, DayResolution,Comment, CustomUser, Language, Like
+from .models import Comment, CustomUser, Like
 # Register your models here.
 
 class LikeAdmin(admin.ModelAdmin):
@@ -7,10 +7,6 @@ class LikeAdmin(admin.ModelAdmin):
     search_fields = ["user"]
 
 
-
-admin.site.register(Day)
-admin.site.register(DayResolution)
 admin.site.register(Comment)
 admin.site.register(CustomUser)
-admin.site.register(Language)
 admin.site.register(Like)

@@ -1,62 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse 
 from django.views.decorators.csrf import csrf_exempt    
+from django.contrib.auth.decorators import login_required
 from adventapi.forms.customCreateUser import CustomCreateUserForm
 from django.contrib.auth import login, authenticate
-from .forms.submit_answer import SubmissionForm
+from advent_days.forms.submit_answer import SubmissionForm
 from django.utils.html import escape
 import json
-from .models import DayResolution, Day,Comment, CustomUser,Language, Like
-from .days.solve import solve
+from .models import Comment, CustomUser, Like
+from advent_days.models import DayResolution
 # Create your views here.
-@csrf_exempt
-def create_days(request):
-    if not Day.objects.exists() and request.method == "GET":
-        for i in range(1, 26):
-            Day.objects.create(
-                number = i
-            )
-        return JsonResponse({'Success': 'Days database succesfully filled'})
-    else:
-        return JsonResponse({"error": "Wrong request method or days already exist."})
-
-@csrf_exempt
-
-def solve_day(request, user_id):
-    try:
-        if request.method == 'POST' and request.body:
-            form = SubmissionForm(request.POST)
-            if form.is_valid():
-                clean_form = form.cleaned_data
-                try:
-                    resolution = DayResolution.objects.get(input=clean_form["input"], user=user_id,day =clean_form["day"])
-                    result = {
-                        1: resolution.answer_part_one,
-                        2: resolution.answer_part_two
-                    }
-               
-
-                except DayResolution.DoesNotExist:
-                        result = solve(clean_form["day"],clean_form["input"])       
-                        # Create a new DayResolution object
-                        day_resolution = DayResolution.objects.create(
-                            input=clean_form["input"],
-                            day=Day.objects.get(number=clean_form["day"]),
-                            answer_part_one=result[1],
-                            answer_part_two=result[2],
-                            language = Language.objects.get(name=clean_form["language"]),
-                            code = escape(clean_form["code"])   ,
-                            user = CustomUser.objects.get(id=user_id),
-                            description = clean_form['description']
-                        )
-                return JsonResponse({"Success":"Day resolution succesfully submited"})
-            return JsonResponse({"error": "invalid form"})
-        
-    except IndexError:
-        return JsonResponse({'error': 'Index out of range. Make sure not to leave empty spaces at the end of the input'}, status=400)
-    except Exception as e:
-        return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=400)
-
 
 def delete_day(request, day):
     if request.method == "POST":
@@ -79,7 +32,7 @@ def get_user_days(request, user_id):
             return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=400)
 
 
-
+@login_required
 def home(request):
     resolutions = DayResolution.objects.order_by('-id')[:10]
     user_id = request.user.id
@@ -92,12 +45,13 @@ def home(request):
                 likes.append(i.post_id)
     return render(request, 'home.html', {'user_id': user_id, 'recent': resolutions, "likes": likes})
 
+
+
 def submit_input(request):
     days = [i for i in range(1,26)]
     user = request.user
     form = SubmissionForm()
     return render(request, 'submit_input.html', {'days': days, 'id': user.id, 'form':form})
-
 @csrf_exempt
 
 def signup(request):
@@ -131,8 +85,8 @@ def resolution_code(request, resolution_id):
     return render(request, 'code.html', {'res': res, 'replies': comments, 'id': resolution_id,})
 
 def save_comment(request, resolution_id):
-    #comment_text = request.POST.get('comment')
-    comment_text = json.loads(request.data)
+    comment_text = request.POST.get('comment')
+    #comment_text = json.loads(request.data)
     user = CustomUser.objects.get(id=request.user.id)
     resolution = DayResolution.objects.get(id=resolution_id)
 

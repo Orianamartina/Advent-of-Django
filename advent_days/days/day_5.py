@@ -1,6 +1,6 @@
-from adventapi.days.lib.input_handlers import read_lines
+from .lib.input_handlers import read_lines
 
-file_contents = read_lines("adventapi/days/day_5_input.txt")
+file_contents = read_lines("advent_days/days/day_5_input.txt")
 
 def solve(input = file_contents):
 

@@ -1,6 +1,6 @@
-from adventapi.days.lib.input_handlers import read_file, split_content
+from .lib.input_handlers import read_file, split_content
 
-file_contents = read_file("adventapi/days/day_14_input.txt")
+file_contents = read_file("advent_days/days/day_14_input.txt")
 
 def solve(text_input=file_contents):
     contents = split_content(file_contents)

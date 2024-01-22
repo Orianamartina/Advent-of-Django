@@ -8,3 +8,4 @@ class SubmissionForm(forms.Form):
     input = forms.CharField(widget=forms.Textarea(attrs={'class':'input-input'}))
     code = forms.CharField(widget=forms.Textarea(attrs={'class':'input-input'}))
     description = forms.CharField(widget=forms.Textarea(attrs={'class':'input-input'}))
+    link_to_repo = forms.CharField()

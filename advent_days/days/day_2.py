@@ -1,6 +1,6 @@
-from adventapi.days.lib.input_handlers import read_file, split_content
+from .lib.input_handlers import read_file, split_content
 
-file_contents = read_file("adventapi/days/day_2_input.txt")
+file_contents = read_file("advent_days/days/day_2_input.txt")
 
 def solve(input=file_contents):
     scores = {

@@ -21,60 +21,67 @@
     <p class="comment">
         {{ r.description }}
     </p>
-    <div style="display: flex; gap: 25px;">
-        <a href="/code/{{ r.id }}"> <button>Code</button></a>
-        <button>Input</button>
-        {% if r.link_to_repo != "none" %}
-        <a href="{{ r.link_to_repo }}">
-            <button class="small_button">Repo</button>
-        </a>
-        {% endif %}
-    </div>
-    {% if r.user == user%}
     <div style="display: flex; justify-content: space-between;">
-        <a href="/code/{{r.id}}"><small style="padding-top: 10px;"> {{r.comments_quantity}} comments</small></a>
-        <button class="likeButtonUser">
-            <small style="color: red; font-size: 16px; margin-right: 10px;"> {{r.likes}} likes</small> <svg
-                style="color: red;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-heart" viewBox="0 0 16 16">
-                <path
-                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-            </svg>
-        </button>
-    </div>
-    {% elif r.id in likes %}
 
-    <div style="display: flex; justify-content: space-between;">
-        <a href="/code/{{r.id}}"><small style="padding-top: 10px;"> {{r.comments_quantity}} comments</small></a>
-        <button class="unlikeButton" onclick="toggleLike('{{r.id}}')">
-            <small style=" font-size: 16px; margin-right: 10px;"> {{r.likes}} likes</small> <svg
-                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart"
-                viewBox="0 0 16 16">
-                <path
-                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-            </svg>
-        </button>
+
+        <div style="display: flex; gap: 25px;">
+            <a href="/code/{{ r.id }}"> <button>Code</button></a>
+            <button>Input</button>
+            {% if r.link_to_repo != "none" %}
+            <a href="{{ r.link_to_repo }}">
+                <button class="small_button">Repo</button>
+            </a>
+            {% endif %}
+        </div>
+        {% if r.user == user%}
+        <div style="display: flex; justify-content: space-between;">
+            <button class="likeButtonUser">
+                <small style="color: red; font-size: 16px; margin-right: 10px;"> {{r.likes}} likes</small><svg
+                    style="color: red;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-heart" viewBox="0 0 16 16">
+                    <path
+                        d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                </svg>
+            </button>
+        </div>
+        {% elif r.id in likes %}
+
+        <div style="display: flex; justify-content: space-between;">
+            <button id="likeButton_{{r.id}}" class="unlikeButton" onclick="toggleLike('{{r.id}}')">
+                <small style=" font-size: 16px; margin-right: 10px;"> {{r.likes}} likes</small> <svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                </svg>
+            </button>
+        </div>
+        {% else %}
+        <div style="display: flex; justify-content: space-between;">
+            <button id="likeButton_{{r.id}}" class="likeButton" onclick="toggleLike('{{r.id}}')">
+                <small style=" font-size: 16px; margin-right: 10px;"> {{r.likes}} likes</small> <svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                </svg>
+            </button>
+        </div>
+        {% endif %}
+
+
     </div>
-    {% else %}
-    <div style="display: flex; justify-content: space-between;">
-        <a href="/code/{{r.id}}"><small style="padding-top: 10px;"> {{r.comments_quantity}} comments</small></a>
-        <button id="likeButton_{{r.id}}" class="likeButton" onclick="toggleLike('{{r.id}}')">
-            <small style=" font-size: 16px; margin-right: 10px;"> {{r.likes}} likes</small> <svg
-                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart"
-                viewBox="0 0 16 16">
-                <path
-                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-            </svg>
-        </button>
-    </div>
-    {% endif %}
+    <a href="/code/{{r.id}}"><small style="padding-top: 10px;"> {{r.comments_quantity}} comments</small></a>
 </div>
 
 <script>
     function toggleLike(postId) {
-
+        console.log("aaa")
+        var button = $(`#likeButton_${postId}`);
         var isLiked = button.hasClass('likeButton');
+
         if (isLiked) {
+            console.log("aaa")
             like(postId)
         }
         else {
@@ -116,7 +123,7 @@
             dataType: 'json',
             headers: { 'X-CSRFToken': csrf_token },
             success: function (response) {
-                var button = $(`#${postId}`);
+                var button = $(`#likeButton_${postId}`);
                 var currentLikes = parseInt(button.find('small').text());
 
                 button.find('small').text((currentLikes - 1) + ' likes');

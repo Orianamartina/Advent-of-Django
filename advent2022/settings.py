@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'adventapi',
+    'advent_days',
     'rest_framework',
     'rest_framework.authtoken',
     "django_extensions",

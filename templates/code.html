@@ -25,7 +25,7 @@
         {% csrf_token %}
         <h3>Leave your comment:</h3>
         <textarea name="comment" id="commentTextarea" cols="30" rows="10"></textarea>
-        <button type="submit">Submit</button>
+        <button onclick="submitForm()">Submit</button>
     </form>
 
 
@@ -33,29 +33,25 @@
 </div>
 {% endblock %}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Assuming you have jQuery included
-        $('form.commentForm').on('submit', function (e) {
-            e.preventDefault(); // Prevent the form from submitting normally
+    function submitForm() {
+        // Get the CSRF token from the page
+        var csrf_token = $('[name="csrfmiddlewaretoken"]').val();
 
-            // Get the CSRF token from the page
-            var csrf_token = $('[name="csrfmiddlewaretoken"]').val();
-
-            // Make an AJAX request to handle form submission
-            console.log($('#commentTextarea').val())
-            $.ajax({
-                url: $(this).attr('action'),
-                method: 'POST',
-                headers: { 'X-CSRFToken': csrf_token }, // Include CSRF token in headers
-                data: JSON.stringify({ comment: $('#commentTextarea').val() }),
-                success: function (data) {
-                    // Reload the page on success
-                    location.reload(true);
-                },
-                error: function () {
-                    console.error('Failed to submit comment');
-                }
-            });
+        // Make an AJAX request to handle form submission
+        console.log($('#commentTextarea').val());
+        $.ajax({
+            url: $('#commentForm').attr('action'), // Use form's action attribute
+            method: 'POST',
+            headers: { 'X-CSRFToken': csrf_token }, // Include CSRF token in headers
+            data: JSON.stringify({ comment: $('#commentTextarea').val() }),
+            success: function (data) {
+                // Reload the page on success
+                console.log("holaa");
+                location.reload(true);
+            },
+            error: function () {
+                console.error('Failed to submit comment');
+            }
         });
-    });
+    }
 </script>

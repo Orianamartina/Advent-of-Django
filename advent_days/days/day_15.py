@@ -1,8 +1,8 @@
-from adventapi.days.lib.input_handlers import read_file
+from .lib.input_handlers import read_file
 import re
 from collections import defaultdict
 
-file_contents = read_file("adventapi/days/day_15_input.txt")
+file_contents = read_file("advent_days/days/day_15_input.txt")
 
 def solve(text_input = file_contents):
 

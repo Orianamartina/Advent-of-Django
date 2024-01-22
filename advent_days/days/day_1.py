@@ -1,7 +1,7 @@
-from adventapi.days.lib.input_handlers import double_split_content, read_file
+from .lib.input_handlers import double_split_content, read_file
 
 
-file_contents = read_file("adventapi/days/day_1_input.txt")
+file_contents = read_file("advent_days/days/day_1_input.txt")
 
 
 def solve(input=file_contents):
