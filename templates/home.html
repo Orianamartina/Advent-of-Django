@@ -3,16 +3,20 @@
 {% if user.is_authenticated %}
 {% include 'nav.html' %}
 <div class="homeContainer">
+    <div class="side_bar_container">
+        {% include "side_bar.html" with languages=languages %}
+    </div>
+    <div class="resolutions_container">
+        <h2>Recent submits:</h2>
+        {% for s in recent%}
+        {% include "resolution_card.html" with r=s %}
+        {% endfor %}
+        {% else %}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">Log In</a>
+        {% endif %}
 
-
-    <h2>Recent submits:</h2>
-    {% for s in recent%}
-    {% include "resolution_card.html" with r=s %}
-    {% endfor %}
-    {% else %}
-    <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Log In</a>
-    {% endif %}
+    </div>
 
 </div>
 

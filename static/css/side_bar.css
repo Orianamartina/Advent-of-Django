@@ -1,0 +1,22 @@
+.side_bar {
+    display: flex;
+    flex-direction: column;
+    padding: 10%;
+    padding-top: 0;
+}
+
+.side_bar_item {
+    margin-top: 8px;
+    font-size: 14px;
+    width: fit-content;
+}
+
+.side_bar_item:hover {
+    cursor: pointer;
+    color: var(--pink);
+
+}
+
+.side_bar_title {
+    font-size: 20px;
+}

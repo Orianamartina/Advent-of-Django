@@ -28,7 +28,7 @@ def solve_day(request, user_id):
             if form.is_valid():
                 clean_form = form.cleaned_data
                 try:
-                    resolution = DayResolution.objects.get(input=clean_form["input"], user=user_id,day =clean_form["day"])
+                    resolution = DayResolution.objects.get(input=clean_form["input"].encode('utf-8'), user=user_id,day =clean_form["day"])
                     result = {
                         1: resolution.answer_part_one,
                         2: resolution.answer_part_two

@@ -8,7 +8,7 @@ from advent_days.forms.submit_answer import SubmissionForm
 from django.utils.html import escape
 import json
 from .models import Comment, CustomUser, Like
-from advent_days.models import DayResolution
+from advent_days.models import DayResolution, Language
 # Create your views here.
 
 def delete_day(request, day):
@@ -38,12 +38,13 @@ def home(request):
     user_id = request.user.id
     user = CustomUser.objects.get(id = user_id)
     likes = []
+    languages = Language.objects.all()
     for res in resolutions:
         l = Like.objects.filter(user = user, post = res)
         if l:
             for i in l:
                 likes.append(i.post_id)
-    return render(request, 'home.html', {'user_id': user_id, 'recent': resolutions, "likes": likes})
+    return render(request, 'home.html', {'user_id': user_id, 'recent': resolutions, "likes": likes, "languages": languages})
 
 
 

@@ -1,0 +1,10 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/side_bar.css' %}">
+
+<div class="side_bar">
+    <h3 class="side_bar_title">Languages: </h3>
+    {% for l in languages %}
+    <small class="side_bar_item">{{l}}</small>
+
+    {% endfor %}
+</div>

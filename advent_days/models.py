@@ -8,6 +8,9 @@ class Day(models.Model):
 class Language(models.Model):
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return str(self.name)
+
 class DayResolution(models.Model):
     id = models.IntegerField(primary_key = True)
     day = models.ForeignKey(Day, on_delete=models.CASCADE)

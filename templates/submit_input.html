@@ -34,12 +34,30 @@
         // Prevent the default form submission
         event.preventDefault();
 
+        // Serialize form data
+        var formData = new FormData(this);
+
         // Perform any additional actions before submitting the form (if needed)
 
-        // Submit the form
-        this.submit();
-        window.location.href = "/";
-
+        // Make a POST request using Fetch API
+        fetch('solveday/{{id}}', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                // Check if the request was successful (status code 200)
+                if (response.ok) {
+                    // Redirect to "/"
+                    window.location.href = "/";
+                } else {
+                    // Handle errors if needed
+                    console.error('Failed to submit the form:', response.statusText);
+                }
+            })
+            .catch(error => {
+                // Handle network errors
+                console.error('Error submitting the form:', error);
+            });
     });
 </script>
 
