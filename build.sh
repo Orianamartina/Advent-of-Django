@@ -6,4 +6,5 @@ poetry install
 
 python manage.py collectstatic --no-input
 python manage.py migrate auth
+python manage.py migrate adventapi
 python manage.py migrate
