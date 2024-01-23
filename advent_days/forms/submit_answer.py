@@ -2,6 +2,7 @@ from django import forms
 from advent_days.models import Language
 class SubmissionForm(forms.Form):
     days_choices = [ (i,i) for i in range(1,26)]
+    language_choices = [("python", "python")]
     #language_choices = [(language.name, language.name) for language in Language.objects.all()]    
     language = forms.ChoiceField(choices=language_choices,widget=forms.Select(attrs={'class': 'custom-select'}))
     day = forms.ChoiceField(choices=days_choices,widget=forms.Select(attrs={'class': 'custom-select'}))
