@@ -36,13 +36,13 @@ def solve_day(request, user_id):
                
 
                 except DayResolution.DoesNotExist:
-                        result = solve(clean_form["day"],clean_form["input"])       
+                        # result = solve(clean_form["day"],clean_form["input"])       
                         # Create a new DayResolution object
                         day_resolution = DayResolution.objects.create(
                             input=clean_form["input"],
                             day=Day.objects.get(number=clean_form["day"]),
-                            answer_part_one=result[1],
-                            answer_part_two=result[2],
+                            answer_part_one=clean_form["answer_part_one"],
+                            answer_part_two=clean_form["answer_part_two"],
                             language = Language.objects.get(name=clean_form["language"]),
                             code = escape(clean_form["code"])   ,
                             user = CustomUser.objects.get(id=user_id),
