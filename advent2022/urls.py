@@ -3,7 +3,6 @@ from django.contrib import admin
 from django.urls import path, include
 from adventapi.views import submit_input, delete_day, get_user_days, home, signup, user_profile, resolution_code, save_comment, my_profile, upload_image, update_image_template_view, like_post,unlike_post
 urlpatterns = [
-
     path("", include("advent_days.urls")),
     path('admin/', admin.site.urls),
     path("", home, name="home"),
