@@ -1,4 +1,4 @@
-
+from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt    
 from .forms.submit_answer import SubmissionForm
@@ -57,3 +57,8 @@ def solve_day(request, user_id):
     except Exception as e:
         return JsonResponse({'error': f'An unexpected error occurred: {str(e)}'}, status=400)
 
+
+def filter_by_language(request, language):
+    filtered_days = DayResolution.objects.filter(language = language)
+
+    return render(request, 'filtered_home.html', {"days": filtered_days})
