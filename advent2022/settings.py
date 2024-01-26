@@ -33,7 +33,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 # Application definition
 
-AUTH_USER_MODEL = 'adventapi.CustomUser'
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -87,12 +87,12 @@ WSGI_APPLICATION = 'advent2022.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db2.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': dj_database_url.config(        
         # Feel free to alter this value to suit your needs.        
@@ -141,9 +141,8 @@ if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
     # Turn on WhiteNoise storage backend that takes care of compressing static files
     # and creating unique names for each version so they can safely be cached forever.
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -151,7 +150,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 
-
+AUTH_USER_MODEL = 'adventapi.CustomUser'
 
 INTERNAL_IPS = [
     # ...
