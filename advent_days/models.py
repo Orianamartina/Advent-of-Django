@@ -12,7 +12,6 @@ class Language(models.Model):
         return str(self.name)
 
 class DayResolution(models.Model):
-    id = models.IntegerField(primary_key = True)
     day = models.ForeignKey(Day, on_delete=models.CASCADE)
     answer_part_one = models.CharField(max_length=1000)
     answer_part_two = models.CharField(max_length=1000)

@@ -5,8 +5,6 @@ from django.contrib.auth.decorators import login_required
 from adventapi.forms.customCreateUser import CustomCreateUserForm
 from django.contrib.auth import login, authenticate
 from advent_days.forms.submit_answer import SubmissionForm
-from django.utils.html import escape
-import json
 from .models import Comment, CustomUser, Like
 from advent_days.models import DayResolution, Language
 # Create your views here.

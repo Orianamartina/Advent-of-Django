@@ -23,4 +23,6 @@ def solve(input=file_contents):
                 top_calories = top_calories[:3]
                 break
 
-    return {1: str(maxCalories), 2: str(top_calories)}
+    print ({1: str(maxCalories), 2: str(top_calories)})
+
+solve()
