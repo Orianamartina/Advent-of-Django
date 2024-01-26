@@ -8,6 +8,6 @@ from advent_days.views import solve_day, create_days
 app_name = 'advent_days'
 
 urlpatterns = [    
-    # path('createdays/', create_days, name="create_days"),
-    # path("solveday/<int:user_id>", solve_day, name="solve"),
+    path('createdays/', create_days, name="create_days"),
+    path("solveday/<int:user_id>", solve_day, name="solve"),
 ]
